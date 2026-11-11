@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Shopping Mall Bill</title>
+<style>
+body{font-family:Arial;text-align:center;background:#f2f2f2}
+.box{background:white;width:350px;margin:20px auto;padding:20px;border-radius:10px}
+input{width:90%;padding:8px;margin:5px}
+button{padding:10px 20px;background:green;color:white;border:none;border-radius:5px}
+#bill{text-align:left;margin-top:15px}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Smart Shopping Mall Bill</h2>
+<input id="item" placeholder="Item Name"><br>
+<input id="price" type="number" placeholder="Price"><br>
+<input id="qty" type="number" placeholder="Quantity"><br>
+<button onclick="addItem()">Add Item</button>
+<div id="bill"></div>
+<h3 id="total"></h3>
+<button onclick="printBill()">Print Bill</button>
+</div>
+<script src="bill.js"></script>
+<script>
+let items=[];
+function addItem(){
+ let name=document.getElementById('item').value;
+ let price=Number(document.getElementById('price').value);
+ let qty=Number(document.getElementById('qty').value);
+ if(!name||!price||!qty){alert("Fill all");return;}
+ items.push({name,price,qty});
+ let html=""; let subtotal=0;
+ items.forEach(i=>{
+   let t=i.price*i.qty; subtotal+=t;
+   html+=i.name+" x "+i.qty+" = Rs."+t+"<br>";
+ });
+ let gst=subtotal*0.18;
+ let total=subtotal+gst;
+ document.getElementById('bill').innerHTML=html;
+ document.getElementById('total').innerHTML="Subtotal: Rs."+subtotal+"<br>GST 18%: Rs."+gst.toFixed(2)+"<br>Total: Rs."+total.toFixed(2);
+}
+function printBill(){window.print();}
+</script>
+</body>
+</html>
